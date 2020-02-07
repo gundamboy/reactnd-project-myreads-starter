@@ -3,13 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bootstrap": "^4.4.1",
     "escape-string-regexp": "^2.0.0",
     "node-sass": "^4.13.1",
     "prop-types": "^15.7.2",
     "react": "^16.6.3",
+    "react-bootstrap": "^1.0.0-beta.16",
+    "react-bootstrap-table-next": "^3.3.3",
     "react-dom": "^16.6.3",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "2.1.1"
+    "react-scripts": "2.1.1",
+    "sort-by": "^1.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
