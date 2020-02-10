@@ -62,16 +62,18 @@ class BooksList extends Component {
 
 	displayBookShelves(books, shelfTitle) {
 		return (
-			<div>
-				<div className="bookshelf">
-					<h2 className="bookshelf-title">{shelfTitle}</h2>
-					<div className="bookshelf-books">
-						<ol className="books-grid">
-							{this.mapBooks(books)}
-						</ol>
+			<Row>
+				<Col>
+					<div className="bookshelf">
+						<h2 className="bookshelf-title">{shelfTitle}</h2>
+						<div className="bookshelf-books">
+							<ol className="books-grid">
+								{this.mapBooks(books)}
+							</ol>
+						</div>
 					</div>
-				</div>
-			</div>
+				</Col>
+			</Row>
 		);
 	};
 
