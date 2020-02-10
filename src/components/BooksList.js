@@ -10,7 +10,6 @@ class BooksList extends Component {
 		super(props);
 
 		this.state = {
-			allBooks: [],
 			currentlyReading: [],
 			wantToRead: [],
 			read: []
@@ -18,14 +17,7 @@ class BooksList extends Component {
 	}
 
 	componentDidMount() {
-		BooksApi.getAll().then((books) => {
-			this.setState(() => ({
-				...this.state,
-				allBooks: books
-			}), () =>{
-				this.getAllBooks();
-			});
-		})
+		this.getAllBooks();
 	}
 
 	getAllBooks() {
@@ -55,11 +47,13 @@ class BooksList extends Component {
 	}
 
 	mapBooks(books) {
+		console.log("BookList books: ", books);
 		return books.map((book, index) => {
 			return (
 				<Book
 					key={index}
 					book={book}
+					shelf={book.shelf}
 					handleSwapShelf={this.handleSwapShelf.bind(this)} />
 			)
 		})

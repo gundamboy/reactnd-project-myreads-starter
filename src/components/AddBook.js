@@ -8,29 +8,37 @@ class AddBook extends Component {
 		super(props);
 
 		this.state = {
-			books: [],
+			searchedBooks: [],
+			currentBooks: [],
 			searchQ:  ''
-		}
+		};
 	}
 
-	handleSearchUpdate(q) {
+	componentDidMount() {
+		BooksAPI.getAll().then((books) => {
+			console.log("AddBook getAll: ", books);
+			this.setState({
+				...this.state,
+				currentBooks: books
+			}, ()=>{
 
-		BooksAPI.search(q).then(books =>
-			books ?
-				this.setState({
-					...this.state,
-					books: books
-				}) : []
-		);
+			})
+		})
+	}
 
+	handleSearchUpdate(searchQ) {
+		BooksAPI.search(searchQ.trim(), 20).then((books) => {
+			books.length > 0
+				? this.setState({...this.state, searchedBooks: books})
+				: this.setState({...this.state, searchedBooks: []})
+		});
 		this.setState({
 			...this.state,
-			searchQ: q
+			searchQ
 		});
 	}
 
 	handleSwapShelf(book, shelf) {
-		console.log("handleSwapShelf")
 		BooksAPI.update(book, shelf)
 			//TODO: make this a div or something
 			.then(() => shelf !== 'none' ? alert(`${book.title} has been added to your shelf!`) : null)
@@ -38,12 +46,20 @@ class AddBook extends Component {
 	}
 
 	showResults() {
-		const {books, searchQ} = this.state;
+		const {searchedBooks, currentBooks, searchQ} = this.state;
+		searchedBooks.forEach((book) => {
+			let match = currentBooks.find((sb) => sb.id === book.id);
+			if (match) {
+				book.shelf = match.shelf;
+			} else {
+				book.shelf = 'none'
+			}
+		});
 
 		if (searchQ) {
-			return books.error ?
+			return searchedBooks.error ?
 				<div>No results found</div>
-				: books.map((book, index) => {
+				: searchedBooks.map((book, index) => {
 					return (
 						<Book
 							key={index}

@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types'
+import React from 'react';
+import * as BooksApi from '../api/BooksAPI';
 
 const Book = ({ book, handleSwapShelf }) => {
 
-	// if a book doesn't have a cover we want to show SOMETHING to the user so it's not blank.
+	// if a book doesn't have a cover we want to show SOMETHING to show the user so it's not blank.
 	// They may think the app isn't working properly otherwise.
 	const bookImageUrl = book.imageLinks ? book.imageLinks.smallThumbnail : 'https://dummyimage.com/123x192/b8b8b8/333333.png&text=No+Cover+Available';
 
@@ -18,7 +18,7 @@ const Book = ({ book, handleSwapShelf }) => {
 		<li>
 			<div className="book">
 				<div className="book-top">
-					<div className="book-cover" style={styles}></div>
+					<div className="book-cover" style={styles}> </div>
 					<div className="book-shelf-changer">
 						<select value={book.shelf}
 						        onChange={e => handleSwapShelf(book, e.target.value)}>
