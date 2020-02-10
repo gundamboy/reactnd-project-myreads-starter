@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import * as BooksApi from '../api/BooksAPI';
 import escapeStringRegexp from "escape-string-regexp";
 import Book from "./Book";
+import {Row, Col} from "react-bootstrap";
 
 class BooksList extends Component {
 	constructor(props) {
@@ -12,13 +13,12 @@ class BooksList extends Component {
 			allBooks: [],
 			currentlyReading: [],
 			wantToRead: [],
-			booksRead: []
+			read: []
 		}
 	}
 
 	componentDidMount() {
 		BooksApi.getAll().then((books) => {
-			// store the books in state to reduce API calls when the component mounts
 			this.setState(() => ({
 				...this.state,
 				allBooks: books
@@ -29,26 +29,23 @@ class BooksList extends Component {
 	}
 
 	getAllBooks() {
-		const books = this.state.allBooks;
-		console.log("getAllBooks books: ", books);
+		BooksApi.getAll().then((books) => {
+			const currentlyReadingRegEx = new RegExp(escapeStringRegexp('currentlyReading'));
+			const wantToReadRegEx = new RegExp(escapeStringRegexp('wantToRead'));
+			const readRegEx = new RegExp(escapeStringRegexp('read'));
+			const currentlyReading = books ? books.filter(book => currentlyReadingRegEx.test(book.shelf)) : null;
+			const wantToRead = books ? books.filter(book => wantToReadRegEx.test(book.shelf)) : null;
+			const read = books ? books.filter(book => readRegEx.test(book.shelf)) : null;
 
-		const currentlyReadingRegEx = new RegExp(escapeStringRegexp('currentlyReading'));
-		const wantToReadRegEx = new RegExp(escapeStringRegexp('wantToRead'));
-		const booksReadRegEx = new RegExp(escapeStringRegexp('booksRead'));
-		const currentlyReading = books ? books.filter(book => currentlyReadingRegEx.test(book.shelf)) : null;
-		const wantToRead = books ? books.filter(book => wantToReadRegEx.test(book.shelf)) : null;
-		const booksRead = books ? books.filter(book => booksReadRegEx.test(book.shelf)) : null;
+			this.setState(() => ({
+				...this.state,
+				currentlyReading: currentlyReading,
+				wantToRead: wantToRead,
+				read: read,
+			}), () => {
 
-		console.log("getAllBooks booksRead: ", booksRead);
-
-		this.setState(() => ({
-			...this.state,
-			currentlyReading: currentlyReading,
-			wantToRead: wantToRead,
-			booksRead: booksRead
-		}), () => {
-			console.log("getAllBooks: ", this.state)
-		})
+			})
+		});
 	};
 
 	handleSwapShelf(book, shelf) {
@@ -58,8 +55,6 @@ class BooksList extends Component {
 	}
 
 	mapBooks(books) {
-		console.log("mapBooks books: ", books);
-
 		return books.map((book, index) => {
 			return (
 				<Book
@@ -72,7 +67,6 @@ class BooksList extends Component {
 	}
 
 	displayBookShelves(books, shelfTitle) {
-		console.log("mapBooks displayBookShelves boos/title: ", books, shelfTitle);
 		return (
 			<div>
 				<div className="bookshelf">
@@ -90,44 +84,23 @@ class BooksList extends Component {
 
 	render() {
 		// this prevents multiple rendering
-		if (this.state.allBooks.length > 0) {
-			const {allBooks, currentlyReading, wantToRead, booksRead} = this.state;
+		const {currentlyReading, wantToRead, read} = this.state;
 
-			console.log("render allBooks: ", allBooks)
-			console.log("render currentlyReading: ", currentlyReading)
-			// console.log("wantToRead: ", wantToRead)
-			// console.log("booksRead: ", booksRead)
-
-			return (
-				<div className="list-books">
-					<div className="list-books-title">
-						<h1>MyReads</h1>
-					</div>
-					<div className="list-books-content">
-						{this.displayBookShelves(currentlyReading, 'Books I Am Currently Reading')}
-						{this.displayBookShelves(wantToRead, 'Books I Want to Read')}
-						{this.displayBookShelves(booksRead, 'Books I\'ve Read')}
-					</div>
-					<div className="open-search">
-						<Link to={"/add-a-book"} className={"add-a-book"}>Add a book</Link>
-					</div>
+		return (
+			<div className="list-books">
+				<div className="list-books-title">
+					<h1>MyReads</h1>
 				</div>
-			);
-		} else {
-			return (
-				<div className="list-books">
-					<div className="list-books-title">
-						<h1>MyReads</h1>
-					</div>
-					<div className="list-books-content">
-						<p>Please Add a book to get started</p>
-					</div>
-					<div className="open-search">
-						<Link to={"/add-a-book"} className={"add-a-book"}>Add a book</Link>
-					</div>
+				<div className="list-books-content">
+					{this.displayBookShelves(currentlyReading, 'Books I Am Currently Reading')}
+					{this.displayBookShelves(wantToRead, 'Books I Want to Read')}
+					{this.displayBookShelves(read, 'Books I\'ve Read')}
 				</div>
-			)
-		}
+				<div className="open-search">
+					<Link to={"/add-a-book"} className={"add-a-book"}>Add a book</Link>
+				</div>
+			</div>
+		);
 	}
 }
 
