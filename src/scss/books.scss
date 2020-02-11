@@ -1,0 +1,42 @@
+@import "colors.scss";
+
+.books-grid {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.books-grid li {
+  padding: 10px 15px;
+  text-align: left;
+}
+
+.book {
+  width: 140px;
+}
+
+.book-title,
+.book-authors {
+  font-size: 0.8em;
+}
+
+.book-title {
+  margin-top: 10px;
+  color: darken($gray, 20%);
+}
+
+.book-authors {
+  color: lighten($gray, 20%);
+}
+
+.book-top {
+  position: relative;
+  height: 200px;
+  display: flex;
+  align-items: flex-end;
+}
+
+

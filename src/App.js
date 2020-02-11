@@ -4,6 +4,7 @@ import './App.scss'
 import {BrowserRouter, Route} from 'react-router-dom'
 import BooksList from "./components/BooksList";
 import AddBook from "./components/AddBook";
+import Header from "./components/layout/Header";
 
 
 class BooksApp extends React.Component {

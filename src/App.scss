@@ -1,6 +1,10 @@
-//@import "~react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "./scss/global";
 @import "./scss/mixins";
 @import "./scss/colors";
+@import "./scss/header";
 @import "./scss/home-page";
+@import "./scss/books";
 @import "./scss/search-bar";
 @import "./scss/add-a-book";

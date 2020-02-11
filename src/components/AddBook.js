@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import * as BooksAPI from '../api/BooksAPI';
 import Book from "./Book";
+import Header from "./layout/Header";
 
 class AddBook extends Component {
 	constructor(props) {
@@ -10,7 +11,8 @@ class AddBook extends Component {
 		this.state = {
 			searchedBooks: [],
 			currentBooks: [],
-			searchQ:  ''
+			searchQ:  '',
+			showAddBook: false
 		};
 	}
 
@@ -28,9 +30,11 @@ class AddBook extends Component {
 
 	handleSearchUpdate(searchQ) {
 		BooksAPI.search(searchQ.trim(), 20).then((books) => {
-			books.length > 0
-				? this.setState({...this.state, searchedBooks: books})
-				: this.setState({...this.state, searchedBooks: []})
+			if (books) {
+				books.length > 0
+					? this.setState({...this.state, searchedBooks: books})
+					: this.setState({...this.state, searchedBooks: []})
+			}
 		});
 		this.setState({
 			...this.state,
@@ -57,7 +61,8 @@ class AddBook extends Component {
 		});
 
 		if (searchQ) {
-			return searchedBooks.error ?
+			console.log("searchedBooks: ", searchedBooks);
+			return searchedBooks.error || searchedBooks.length <= 0 ?
 				<div>No results found</div>
 				: searchedBooks.map((book, index) => {
 					return (
@@ -72,26 +77,29 @@ class AddBook extends Component {
 
 	render() {
 		return (
-			<div className="search-books">
-				<div className="search-books-bar">
-					<Link className='close-search' to='/'>
-						Close
-					</Link>
-					<div className="search-books-input-wrapper">
-						<input
-							type="text"
-							placeholder="Search by title or author"
-							value={this.state.search}
-							onChange={e => this.handleSearchUpdate(e.target.value)}/>
+			<>
+				<Header showAddButton={false} fixed={true}/>
+				<div className="search-books">
+					<div className="search-books-bar">
+						<Link title='Go Back To Your Books' className='close-search' to='/'>
+							Close
+						</Link>
+						<div className="search-books-input-wrapper">
+							<input
+								type="text"
+								placeholder="Search by title or author"
+								value={this.state.search}
+								onChange={e => this.handleSearchUpdate(e.target.value)}/>
 
+						</div>
+					</div>
+					<div className="search-books-results">
+						<ol className="books-grid">
+							{this.showResults()}
+						</ol>
 					</div>
 				</div>
-				<div className="search-books-results">
-					<ol className="books-grid">
-						{this.showResults()}
-					</ol>
-				</div>
-			</div>
+				</>
 		);
 	}
 }

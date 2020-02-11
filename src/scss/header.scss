@@ -1,0 +1,41 @@
+@import "colors.scss";
+
+header {
+  background-color: $light-beige;
+
+  &.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+  }
+
+  #title-nav {
+    justify-content: flex-end;
+  }
+
+  .navbar.bg-beige {
+    .book-icon {
+      fill: darken($gray, 20%);
+      color: darken($gray, 20%);
+
+      margin-right: 0.5em;
+    }
+
+    .navbar-brand {
+      color: darken($gray, 20%);
+    }
+  }
+
+  .add-a-book {
+    color: $light-salmon;
+    cursor: pointer;
+    transition: all, 0.3s ease-in-out;
+
+    &:hover {
+      text-decoration: none;
+      color: darken($dark-salmon, 10%);
+    }
+  }
+}
