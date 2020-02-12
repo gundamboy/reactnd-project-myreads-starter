@@ -103,7 +103,7 @@ class BooksList extends Component {
 
 		return (
 			<div className="list-books">
-				<Header showAddButton={true} fixed={false}/>
+				<Header showAddButton={true} fixed={false} classes={''}/>
 				<div className="list-books-content">
 					{this.displayBookShelves(currentlyReading, 'Books I Am Currently Reading', 'currentlyReading')}
 					{this.displayBookShelves(wantToRead, 'Books I Want to Read', 'wantToRead')}

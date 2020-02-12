@@ -3,6 +3,10 @@
 header {
   background-color: $light-beige;
 
+  .searchContainer {
+    display: none;
+  }
+
   &.fixed {
     position: fixed;
     top: 0;
@@ -17,9 +21,7 @@ header {
 
   .navbar.bg-beige {
     .book-icon {
-      fill: darken($gray, 20%);
       color: darken($gray, 20%);
-
       margin-right: 0.5em;
     }
 
@@ -28,7 +30,8 @@ header {
     }
   }
 
-  .add-a-book {
+  .add-a-book,
+  .back-to-shelves {
     color: $light-salmon;
     cursor: pointer;
     transition: all, 0.3s ease-in-out;
@@ -37,5 +40,21 @@ header {
       text-decoration: none;
       color: darken($dark-salmon, 10%);
     }
+  }
+
+  .back-to-shelves {
+    display: inline-block;
+    text-align: right;
+  }
+
+  &.search {
+    display: block;
+
+     .search-container {
+       display: flex;
+       flex-direction: row;
+       align-items: center;
+       justify-content: flex-end;
+     }
   }
 }

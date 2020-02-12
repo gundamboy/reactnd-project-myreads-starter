@@ -102,9 +102,22 @@ class AddBook extends Component {
 	}
 
 	render() {
+		const searchInput = (
+			<div className="search-books-bar">
+				<div className="search-books-input-wrapper">
+					<input
+						type="text"
+						placeholder="Search by title or author"
+						value={this.state.search}
+						onChange={e => this.handleSearchUpdate(e.target.value)}/>
+
+				</div>
+			</div>
+		);
+
 		return (
 			<>
-				<Header showAddButton={false} fixed={true}/>
+				<Header showAddButton={false} fixed={true} classes={'search'} searchBar={searchInput}/>
 				<Modal show={this.state.showModal} onHide={this.closeModal}>
 					<Modal.Header closeButton>
 						<Modal.Title>MyReads</Modal.Title>
@@ -117,19 +130,6 @@ class AddBook extends Component {
 					</Modal.Footer>
 				</Modal>
 				<div className="search-books">
-					<div className="search-books-bar">
-						<Link title='Go Back To Your Books' className='close-search' to='/'>
-							Close
-						</Link>
-						<div className="search-books-input-wrapper">
-							<input
-								type="text"
-								placeholder="Search by title or author"
-								value={this.state.search}
-								onChange={e => this.handleSearchUpdate(e.target.value)}/>
-
-						</div>
-					</div>
 					<div className="search-books-results">
 						<ol className="books-grid">
 							{this.showResults()}
