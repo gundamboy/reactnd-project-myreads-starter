@@ -1,7 +1,7 @@
 import React from 'react';
 import * as BooksApi from '../api/BooksAPI';
 
-const Book = ({ book, handleSwapShelf }) => {
+const Book = ({ book, classes, handleSwapShelf }) => {
 
 	// if a book doesn't have a cover we want to show SOMETHING to show the user so it's not blank.
 	// They may think the app isn't working properly otherwise.
@@ -18,7 +18,7 @@ const Book = ({ book, handleSwapShelf }) => {
 		<li>
 			<div className="book">
 				<div className="book-top">
-					<div className="book-cover" style={styles}> </div>
+					<div className={`book-cover ${classes}`} style={styles}> </div>
 					<div className="book-shelf-changer">
 						<select value={book.shelf}
 						        onChange={e => handleSwapShelf(book, e.target.value)}>

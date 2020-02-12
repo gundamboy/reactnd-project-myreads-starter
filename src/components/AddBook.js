@@ -1,8 +1,10 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {Link} from "react-router-dom";
 import * as BooksAPI from '../api/BooksAPI';
 import Book from "./Book";
 import Header from "./layout/Header";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 class AddBook extends Component {
 	constructor(props) {
@@ -12,13 +14,14 @@ class AddBook extends Component {
 			searchedBooks: [],
 			currentBooks: [],
 			searchQ:  '',
-			showAddBook: false
+			showAddBook: false,
+			showModal: false,
+			bookTitle: ''
 		};
 	}
 
 	componentDidMount() {
 		BooksAPI.getAll().then((books) => {
-			console.log("AddBook getAll: ", books);
 			this.setState({
 				...this.state,
 				currentBooks: books
@@ -44,31 +47,54 @@ class AddBook extends Component {
 
 	handleSwapShelf(book, shelf) {
 		BooksAPI.update(book, shelf)
-			//TODO: make this a div or something
-			.then(() => shelf !== 'none' ? alert(`${book.title} has been added to your shelf!`) : null)
-			.catch(() => alert('Something went wrong! Please try again!'));
+			.then(() => {
+				if(shelf !== 'none') {
+					this.showModal(book);
+				}
+			})
+			.catch(() => alert('We\'re sorry but something went wrong. Please try again'));
 	}
+
+	showModal(book) {
+		this.setState({
+			...this.state,
+			showModal: true,
+			bookTitle: book.title
+		})
+	};
+
+	closeModal = () => {
+		this.setState({
+			...this.state,
+			showModal: false,
+			bookTitle: ''
+		})
+	};
 
 	showResults() {
 		const {searchedBooks, currentBooks, searchQ} = this.state;
+
 		searchedBooks.forEach((book) => {
 			let match = currentBooks.find((sb) => sb.id === book.id);
 			if (match) {
 				book.shelf = match.shelf;
+
 			} else {
 				book.shelf = 'none'
 			}
 		});
 
 		if (searchQ) {
-			console.log("searchedBooks: ", searchedBooks);
 			return searchedBooks.error || searchedBooks.length <= 0 ?
 				<div>No results found</div>
 				: searchedBooks.map((book, index) => {
+					const classes = (book.shelf !== 'none') ? `inShelf ${book.shelf}` : '';
+
 					return (
 						<Book
 							key={index}
 							book={book}
+							classes={classes}
 							handleSwapShelf={this.handleSwapShelf.bind(this)}/>
 					);
 				});
@@ -79,6 +105,17 @@ class AddBook extends Component {
 		return (
 			<>
 				<Header showAddButton={false} fixed={true}/>
+				<Modal show={this.state.showModal} onHide={this.closeModal}>
+					<Modal.Header closeButton>
+						<Modal.Title>MyReads</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>{`Woohoo! ${this.state.bookTitle} has been added to your shelf!`}</Modal.Body>
+					<Modal.Footer>
+						<Button variant="secondary" onClick={this.closeModal}>
+							Close
+						</Button>
+					</Modal.Footer>
+				</Modal>
 				<div className="search-books">
 					<div className="search-books-bar">
 						<Link title='Go Back To Your Books' className='close-search' to='/'>
@@ -99,7 +136,7 @@ class AddBook extends Component {
 						</ol>
 					</div>
 				</div>
-				</>
+			</>
 		);
 	}
 }
