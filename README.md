@@ -10,5 +10,5 @@ This is the first project in the Udacity React Nanodegree. This react app is a b
 ### Home Page Image
 ![MyReads Home](myReads-home.png)
 
-### Add a Book / Search Page Image
+### Add a Book / Search Page Image. Existing books on your shelves are highlighted.
 ![MyReads Home](myReads-search.png)

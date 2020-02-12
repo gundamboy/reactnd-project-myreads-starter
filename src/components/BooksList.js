@@ -53,7 +53,6 @@ class BooksList extends Component {
 	}
 
 	mapBooks(books) {
-		console.log("BookList books: ", books.length);
 		return books.map((book, index) => {
 			return (
 				<Book
