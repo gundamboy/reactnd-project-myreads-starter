@@ -7,7 +7,8 @@ This is the first project in the Udacity React Nanodegree. This react app is a b
 * install all project dependencies with `npm install`
 * start the development server with `npm start`
 
-## Images
+### Home Page Image
 ![MyReads Home](myReads-home.png)
 
+### Add a Book / Search Page Image
 ![MyReads Home](myReads-search.png)
