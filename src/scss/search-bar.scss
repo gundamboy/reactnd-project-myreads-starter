@@ -1,0 +1,53 @@
+@import "colors.scss";
+
+.search-books {}
+
+.search-books-bar {
+  background-color: $light-beige;
+  position: fixed;
+  width: 60%;
+  top: 0;
+  right: 30px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  height: 56px;
+}
+
+.search-books-input-wrapper {
+  flex: 1;
+}
+
+.search-books-bar input {
+  width: 100%;
+  padding: 10px 10px;
+  font-size: 1.25em;
+  border: 1px solid $gray;
+  border-radius: 10px;
+  max-height: 40px;
+  outline: none;
+}
+
+.close-search {
+  display: block;
+  top: 20px;
+  left: 15px;
+  width: 50px;
+  height: 53px;
+  background-image: url('./assets/icons/arrow-back.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 28px;
+  font-size: 0;
+  border: none;
+  outline: none;
+}
+
+button:active {
+  border: red;
+  outline: none;
+}
+
+.search-books-results {
+  padding: 80px 10px 20px;
+}
