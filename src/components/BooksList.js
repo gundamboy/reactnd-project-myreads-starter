@@ -73,7 +73,6 @@ class BooksList extends Component {
 		}
 		return (
 			<>
-				<Header showAddButton={true} fixed={false}/>
 				<section className={shelfClasses.join(' ')}>
 					<Container>
 						<Row>
@@ -105,7 +104,7 @@ class BooksList extends Component {
 
 		return (
 			<div className="list-books">
-
+				<Header showAddButton={true} fixed={false}/>
 				<div className="list-books-content">
 					{this.displayBookShelves(currentlyReading, 'Books I Am Currently Reading', 'currentlyReading')}
 					{this.displayBookShelves(wantToRead, 'Books I Want to Read', 'wantToRead')}

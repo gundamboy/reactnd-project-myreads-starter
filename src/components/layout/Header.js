@@ -22,7 +22,7 @@ class Header extends Component {
 		return (
 			<header role="banner" className={this.state.isFixed ? "fixed" : ""}>
 				<Navbar bg="beige" expand>
-					<Navbar.Brand href="#home"><FontAwesomeIcon className={"book-icon"} icon={faBook} /> MyReads</Navbar.Brand>
+					<Navbar.Brand><FontAwesomeIcon className={"book-icon"} icon={faBook} /> MyReads</Navbar.Brand>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					{this.state.showAddButton ?
 						<Navbar.Collapse id="title-nav">
