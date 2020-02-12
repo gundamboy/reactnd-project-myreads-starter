@@ -1,5 +1,4 @@
-import React, {Component, useState} from 'react';
-import {Link} from "react-router-dom";
+import React, {Component} from 'react';
 import * as BooksAPI from '../api/BooksAPI';
 import Book from "./Book";
 import Header from "./layout/Header";
