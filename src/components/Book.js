@@ -1,5 +1,4 @@
 import React from 'react';
-import * as BooksApi from '../api/BooksAPI';
 
 const Book = ({ book, classes, handleSwapShelf }) => {
 
